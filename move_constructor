@@ -1,0 +1,92 @@
+#include<iostream>
+
+//lvalue : well defined memeory address
+//rvalue : address is not known, const or tmp object. ( value can not be assifned )
+using std::cout;
+using std::endl;
+
+static int global;
+
+void fun(int& lv)
+{
+  cout<<"normal copy called"<<endl;
+}
+void fun(int&& rv)
+{
+  cout<<"rvalue copy called"<<endl;
+}
+int increment(int n)
+{
+  return n+2;  //rvalue as &(n+2) can be done
+}
+
+class c1
+{
+  int* p;
+  public:
+  c1(){
+   p = new int;
+   cout<<"constructor got called"<<endl;
+  }
+  c1(const c1& obj)
+  {
+    this->p = new int;
+    cout<<"copy const"<<endl;
+    global++;
+  }
+  //c1(c1&& obj) noexcept
+  c1(c1&& obj)
+  {
+    cout<<"move const(rvalue ref)"<<endl;
+    this->p = obj.p;
+    obj.p = nullptr;
+
+  }
+  ~c1(){
+    delete p;
+    cout<<"destructor"<<endl;
+  }
+};
+
+c1 getObj()
+{
+  return c1();
+}
+
+
+int main()
+{
+  int i; //lvalue   as i address is known;
+  int *j = &i;  //j is also lvalue so value can be assigned.
+  i = 2; //2 is r value, we can not assign value to address of 2
+  /*
+  int &k = 2;*/ //error   value can be changed with k
+  const int &kk = 2;  //const so valid.
+  int &&rv = 2;
+  cout<<"++rv "<<++rv<<endl;  // rv will get value instead of address to 2
+
+  fun(i);   //normal
+  fun(2);   //rvalue
+  fun(2+5); //rvalue
+
+  i = increment(i+2) ;  //n+2 rvalue .
+
+ // fun(class c1()); //c1 is temorary hence rvalue
+ cout<<endl<<"class exp"<<endl;
+ c1 o;
+ c1 o1(o);
+
+ c1 obj10[10]( o );
+
+ cout<<global<<endl;
+
+ global = 0;
+ //c1 &ro = o;
+ c1 objb10[10]( getObj()  );
+ c1 objbc10[10]( (c1()) );
+ //c1 obj10[10]( o+o1 ); //overload + operator
+ cout<<global<<endl;
+
+  return 0;
+}
+
