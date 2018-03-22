@@ -51,6 +51,13 @@ int main() {
   copy(array.begin(),array.end(),ostream_iterator<int>(cout," "));
               /*for(i=0;i<count;i++)
                           cout<<array[i]<<" ";*/
+//transform
+//modify arry and copy to another vector
+  vector<int> modVec;
+  transform(array.begin(),array.end(),back_inserter(modVec),myTransform);
+  cout<<"after transform of vector with my_ransform"<<endl;
+  copy(modVec.begin(),modVec.end(),ostream_iterator<int>(cout," "));
+  cout<<endl;                          
 
 // Lambda
   if ( any_of( array.begin(),array.end(),[](int x){ return x==5;} ) )
@@ -63,13 +70,7 @@ int main() {
   cout<<endl<<"no of odd value in vector is "<<count_if(array.begin(),array.end(), check_odd )<<endl;
   cout<<endl;
 
-//transform
-//modify arry and copy to another vector
-  vector<int> modVec;
-  transform(array.begin(),array.end(),back_inserter(modVec),myTransform);
-  cout<<"after transform of vector with my_ransform"<<endl;
-  copy(modVec.begin(),modVec.end(),ostream_iterator<int>(cout," "));
-  cout<<endl;
+
 
         return 0;
 }
