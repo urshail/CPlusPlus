@@ -1,0 +1,75 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <iterator>
+#include <fstream>
+//using namespace std;
+using std::endl;
+using std::cin;
+using std::cout;
+using std::copy;
+using std::vector;
+using std::istream_iterator;
+using std::ostream_iterator;
+using std::fstream;
+
+//used for transform
+bool check_odd(int a)
+{
+          return a%2!=0;
+}
+
+
+int myTransform(int a)
+{
+          return a+1000;
+}
+int main() {
+  vector<int> array;
+            //array.resize(5); //resize req for array.begin with cin
+            //int i,count,tmp;
+  cout << "ENter number terminated by ctrl+D" << endl;
+            //copy(istream_iterator<int> (cin),istream_iterator<int>(),array.begin());
+
+#define MY_TEST
+#ifdef MY_TEST
+    fstream istreamObj("test.txt");
+#else
+    istream& istreamObj(cin);
+#endif
+
+  copy(istream_iterator<int> (istreamObj),istream_iterator<int>(),back_inserter(array));
+            //while ( cin >> tmp)
+            //  array[count++]=tmp;
+            //for(i=0;i<5;i++)
+            //  cin>>array[i];
+  copy(array.begin(),array.end(),ostream_iterator<int>(cout," "));
+  cout<<endl;
+
+  sort(array.begin(),array.end());
+  cout<<endl<<"after sort"<<endl;
+  copy(array.begin(),array.end(),ostream_iterator<int>(cout," "));
+              /*for(i=0;i<count;i++)
+                          cout<<array[i]<<" ";*/
+
+// Lambda
+  if ( any_of( array.begin(),array.end(),[](int x){ return x==5;} ) )
+        cout<<endl<<"one value in array is 5"<<endl;
+
+  auto even = [](int x)         {               return x%2==0;          };
+  cout<<endl<<"no of even value in vector is "<<count_if(array.begin(),array.end(), even )<<endl;
+
+
+  cout<<endl<<"no of odd value in vector is "<<count_if(array.begin(),array.end(), check_odd )<<endl;
+  cout<<endl;
+
+//transform
+//modify arry and copy to another vector
+  vector<int> modVec;
+  transform(array.begin(),array.end(),back_inserter(modVec),myTransform);
+  cout<<"after transform of vector with my_ransform"<<endl;
+  copy(modVec.begin(),modVec.end(),ostream_iterator<int>(cout," "));
+  cout<<endl;
+
+        return 0;
+}
