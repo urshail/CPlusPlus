@@ -2,8 +2,9 @@
 
 //lvalue : well defined memeory address
 //rvalue : address is not known, const or tmp object. ( value can not be assifned )
-using std::cout;
-using std::endl;
+//using std::cout;
+//using std::endl;
+using namespace std;
 
 static int global;
 
@@ -48,11 +49,10 @@ class c1
   }
 };
 
-c1 getObj()
+c1 getObj( c1 a)
 {
-  return c1();
+  return a;
 }
-
 
 int main()
 {
@@ -64,7 +64,6 @@ int main()
   const int &kk = 2;  //const so valid.
   int &&rv = 2;
   cout<<"++rv "<<++rv<<endl;  // rv will get value instead of address to 2
-
   fun(i);   //normal
   fun(2);   //rvalue
   fun(2+5); //rvalue
@@ -77,14 +76,17 @@ int main()
  c1 o1(o);
 
  c1 obj10[10]( o );
-
  cout<<global<<endl;
 
+ c1 ro = getObj( c1() );
+ cout<<" std:move call " << endl;
+ c1 oo2 = std::move(ro);
+ cout<<" std::move end  " << endl;
+
+
  global = 0;
- //c1 &ro = o;
- c1 objb10[10]( getObj()  );
- c1 objbc10[10]( (c1()) );
- //c1 obj10[10]( o+o1 ); //overload + operator
+ c1 objb10[10]( getObj( c1()  ));
+
  cout<<global<<endl;
 
   return 0;
