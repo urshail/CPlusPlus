@@ -1,0 +1,45 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<iterator>
+using namespace std;
+
+int main()
+{
+    vector<int> ar;
+    ar.push_back(2);
+    ar.push_back(4);
+    ar.push_back(5);
+    ar.push_back(5);
+    ar.push_back(6);
+    ar.push_back(1);
+    ar.push_back(5);
+    ar.push_back(9);
+    ar.push_back(1);
+    ar.push_back(9);
+    ar.push_back(13);
+    ar.push_back(9);
+    
+    copy(ar.begin(),ar.end(),ostream_iterator<int>(cout," ") );
+    cout<<endl;
+    vector<int>::iterator itr;
+    do
+    {
+    //Method 1
+           itr=find(ar.begin(),ar.end(),5);
+           if(ar.end() != itr )
+                       ar.erase(itr);
+    }while( itr != ar.end() );
+    //erase is not efficient as vector will be aligned with each erase.
+    
+    copy(ar.begin(),ar.end(),ostream_iterator<int>(cout," ") );
+    cout<<endl;
+    
+    //Method 2
+    ar.erase( remove(ar.begin(),ar.end(),9),ar.end() );
+    copy(ar.begin(),ar.end(),ostream_iterator<int>(cout," ") );
+    cout<<endl; 
+    
+    system("pause");
+    return 0;
+}    
