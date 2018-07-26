@@ -1,0 +1,40 @@
+//Object slicing
+
+#include<iostream>
+using namespace std;
+
+class test
+{
+      public: 
+      test() { cout<<"default constructor"<<endl;      }
+      void printv() { cout<<"test print"<<endl;      }
+};
+
+class c1:public test
+{
+      public:
+      c1(){cout<<"inside c1 cons"<<endl; }
+      void printv() { cout<<" c1 print "<<endl;      }
+};
+class c2 : public c1
+{
+      public:
+            c2(){cout<<"inside c2 cons "<<endl; }
+           void printv() { cout<<" c2 print "<<endl;      }
+};
+
+void fun(test t)
+{
+     t.printv();
+}
+int main(int argc,char *argv[])
+{
+    c2 o;
+    //test o;
+    fun(o);
+
+    test  t1 = o; //allowed
+    //c1 c4 = t1; //not allowed
+    system("pause");
+    return 0;
+}
