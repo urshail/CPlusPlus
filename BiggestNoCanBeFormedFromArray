@@ -1,0 +1,56 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include<iterator>
+#include<sstream>
+using namespace std;
+
+void printVec(vector<int> &intVec)
+{
+    for(vector<int>::iterator itr=intVec.begin();itr!=intVec.end();itr++)
+            cout<<*itr<<" ";
+}
+int MSB(int no )
+{
+   while (no/10)
+     no=no/10;
+  return no;
+}
+bool sortWithMSB(int first, int second)
+{
+    //cout<<"first "<<first<<" MSB(first) "<<MSB(first)<<" ||| second "<<second<<" MSB(second) "<<MSB(second)<<endl;
+    return MSB(first) > MSB (second) ;
+}
+
+void printBiggestNo(vector<int> &intVec)
+{
+    stringstream ss;
+    for(vector<int>::iterator itr=intVec.begin();itr!=intVec.end();itr++)
+    {
+            ss << *itr;
+    }
+    cout<<"Biggest no can be formed is : "<<ss.str()<<endl;
+}
+
+int main() {
+
+    int noOfVal=0;
+    cout<<"how many entries in array ? : "<<endl;
+    cin>>noOfVal;
+    std::vector<int> intVec;
+    std::vector<int>::iterator itr;
+    int tmp;
+    for(int i=0;i<noOfVal;i++)
+    {
+            cout<<"Enter data : ";
+            cin>>tmp;
+            intVec.push_back( tmp);
+    }
+    printVec(intVec);
+
+    std::sort(intVec.begin(),intVec.end(),sortWithMSB);
+
+    printBiggestNo(intVec);
+
+    return 0;
+}
