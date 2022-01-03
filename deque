@@ -1,0 +1,66 @@
+#include<iostream>
+#include<algorithm>
+#include<deque>
+using namespace std;
+
+int main()
+{
+
+deque<int> deq;
+deq.push_back(8);
+deq.push_back(18);
+deq.push_front(99);
+deq.push_front(109);
+for(int i:deq)
+  cout<<i<<" ";
+cout<<endl;
+deq.insert(deq.begin()+1, 45);
+for(int i:deq)
+  cout<<i<<" ";
+cout<<endl;
+
+deq[2]=1000;
+for(int i:deq)
+  cout<<i<<" ";
+cout<<endl;
+
+deque<int>::iterator di = find(deq.begin(),deq.end(),45);
+if(di !=deq.end())
+  cout<<"found at "<<di-deq.begin()<<" location"<<endl;
+
+cout<<"popping out values"<<endl;
+deq.pop_front();
+deq.pop_back();
+
+for(int i:deq)
+  cout<<i<<" ";
+cout<<endl;
+
+
+for(int i=0;i<deq.size();i++)
+  cout<<"Deque value at position "<<i<<" is "<<deq.at(i)<<endl;
+cout<<endl;
+
+cout<<"values in reverse order are ";
+deque<int>::reverse_iterator ritr=deq.rbegin();
+for(;ritr!=deq.rend();ritr++)
+  cout<<*ritr<<" ";
+cout<<endl;
+
+di = find(deq.begin(),deq.end(),45);
+if(di !=deq.end())
+{
+  cout<<"erasing "<<*di<<" from "<<di-deq.begin()<<" location"<<endl;
+  deq.erase(di);
+} 
+
+for(int i:deq)
+  cout<<i<<" ";
+cout<<endl;
+
+deq.clear();
+if(deq.empty())
+  cout<<"deq is empty now"<<endl;
+
+return 0;
+}
